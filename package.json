@@ -4,13 +4,15 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+		"server": "azure-local-service",
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"lint": "biome check --write ./src",
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@fluidframework/tinylicious-client": "^2.13.0",
+		"@fluidframework/azure-client": "^2.13.0",
+		"@fluidframework/azure-local-service": "^2.13.0",
 		"fluid-framework": "^2.13.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1"
