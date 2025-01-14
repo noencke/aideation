@@ -1,32 +1,40 @@
+import React from "react";
 import "./App.css";
 import type { Canvas } from "./schema";
+import { Tree } from "fluid-framework";
 
-function App(props: { canvas: Canvas }) {
+function App({ canvas }: { canvas: Canvas }) {
+	const [_, update] = React.useState(0);
+	React.useEffect(() => Tree.on(canvas, "treeChanged", () => update((i) => i + 1)));
+
+	const notes = canvas.notes.map((note) => (
+		<div
+			key={note.id}
+			style={{
+				position: "absolute",
+				top: note.y,
+				left: note.x,
+				backgroundColor: "yellow",
+				color: "black",
+				padding: "10px",
+				border: "1px solid #999",
+			}}
+		>
+			{note.text}
+		</div>
+	));
+
 	return (
 		<>
 			<div
 				style={{
 					position: "relative",
-					width: "800px",
-					height: "600px",
+					width: `${canvas.width}px`,
+					height: `${canvas.height}px`,
 					border: "1px solid #ccc",
 				}}
 			>
-				{props.canvas.notes.map((note) => (
-					<div
-						key={note.id}
-						style={{
-							position: "absolute",
-							top: note.y,
-							left: note.x,
-							backgroundColor: "yellow",
-							padding: "10px",
-							border: "1px solid #999",
-						}}
-					>
-						{note.text}
-					</div>
-				))}
+				{notes}
 			</div>
 		</>
 	);

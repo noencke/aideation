@@ -1,5 +1,5 @@
 import type { Action } from "./actions";
-import type { Canvas } from "./schema";
+import { Note, type Canvas } from "./schema";
 
 export interface AgentContext {
     canvas(): Canvas;
@@ -13,7 +13,7 @@ export function createAgent(context: AgentContext): unknown {
                 case "newNote": {
                     const x = Math.floor(Math.random() * canvas.width);
                     const y = Math.floor(Math.random() * canvas.height);
-                    canvas.notes.insertAtEnd({ text: action.text, x, y });
+                    canvas.notes.insertAtEnd(new Note({ text: action.parameters.text, x, y }));
                     break;
                 }
                 default:
