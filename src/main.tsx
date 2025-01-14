@@ -17,7 +17,7 @@ const schema = `
 export type Action = NewNote;
 
 interface NewNote {
-    type: "NewNote";
+    actionName: "newNote";
     text: string;
 }`;
 
