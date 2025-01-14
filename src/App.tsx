@@ -4,7 +4,14 @@ import type { Canvas } from "./schema";
 function App(props: { canvas: Canvas }) {
 	return (
 		<>
-			<div style={{ position: "relative", width: "800px", height: "600px", border: "1px solid #ccc" }}>
+			<div
+				style={{
+					position: "relative",
+					width: "800px",
+					height: "600px",
+					border: "1px solid #ccc",
+				}}
+			>
 				{props.canvas.notes.map((note) => (
 					<div
 						key={note.id}
@@ -14,7 +21,7 @@ function App(props: { canvas: Canvas }) {
 							left: note.x,
 							backgroundColor: "yellow",
 							padding: "10px",
-							border: "1px solid #999"
+							border: "1px solid #999",
 						}}
 					>
 						{note.text}
