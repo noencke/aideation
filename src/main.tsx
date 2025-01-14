@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		(window as any)
 			// TODO: You gotta be on port 9000 for this to work. This ought to be added to the docs.
 			.registerTypeAgent(
-				"Sticky Notes",
+				"stickyNotes",
 				manifest,
 				createAgent({ canvas: () => canvas }),
 			)
