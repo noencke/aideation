@@ -1,11 +1,13 @@
 import React from "react";
 import "./App.css";
-import type { Canvas } from "./schema";
 import { Tree } from "fluid-framework";
+import type { Canvas } from "./schema";
 
 function App({ canvas }: { canvas: Canvas }) {
 	const [_, update] = React.useState(0);
-	React.useEffect(() => Tree.on(canvas, "treeChanged", () => update((i) => i + 1)));
+	React.useEffect(() =>
+		Tree.on(canvas, "treeChanged", () => update((i) => i + 1)),
+	);
 
 	const notes = canvas.notes.map((note) => (
 		<div
