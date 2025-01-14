@@ -22,7 +22,7 @@ interface NewNote {
 }`;
 
 const manifest = {
-	emojiChar: "📝",
+	emojiChar: "🟨",
 	description: "Agent to create and manage a canvas of sticky notes",
 	schema: {
 		description: "Agent with actions to create sticky notes",
