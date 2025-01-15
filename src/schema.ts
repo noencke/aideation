@@ -7,10 +7,18 @@ export class Note extends sf.object("Note", {
 	text: sf.string,
 	x: sf.number,
 	y: sf.number,
-}) {}
+}) { }
+
+export class Todo extends sf.object("Todo", {
+	id: sf.identifier,
+	text: sf.string,
+	completed: sf.boolean,
+	x: sf.number,
+	y: sf.number,
+}) { }
 
 export class Canvas extends sf.object("Canvas", {
 	width: sf.number,
 	height: sf.number,
-	notes: sf.array(Note),
-}) {}
+	items: sf.array([Note, Todo]),
+}) { }

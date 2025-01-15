@@ -11,23 +11,32 @@ import {
 	TreeViewConfiguration,
 } from "fluid-framework";
 import { createAgent } from "./handlers.ts";
-import { Canvas } from "./schema.ts";
+import { Canvas, Note, Todo } from "./schema.ts";
 
 const schema = `
-export type Action = NewNote;
+export type Action = NewNote | NewTodo;
 
 interface NewNote {
     actionName: "newNote";
     parameters: {
         text: string;
+    };
+}
+
+interface NewTodo {
+    actionName: "newTodo";
+    parameters: {
+        todo: string;
     }
 }`;
 
-const manifest = {
+type AppAgentManifest = unknown; // TODO: This type is defined in the TypeAgent repo
+
+const manifest: AppAgentManifest = {
 	emojiChar: "🟨",
-	description: "Agent to create and manage a canvas of sticky notes",
+	description: "Agent to create and manage a canvas of notes and todo items",
 	schema: {
-		description: "Agent with actions to create sticky notes",
+		description: "Agent with actions to create text notes and todo items",
 		schemaFile: { content: schema, type: "ts" },
 		schemaType: "Action",
 	},
@@ -85,7 +94,7 @@ async function getContainer(): Promise<
 	view.initialize({
 		width: 800,
 		height: 600,
-		notes: [],
+		items: [new Note({ text: "Test note", x: 100, y: 100 }), new Todo({ text: "Test todo", completed: false, x: 200, y: 200 })],
 	});
 	view.dispose();
 	return container;
