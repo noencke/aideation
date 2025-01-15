@@ -94,7 +94,16 @@ async function getContainer(): Promise<
 	view.initialize({
 		width: 800,
 		height: 600,
-		items: [new Note({ text: "Test note", x: 100, y: 100 }), new Todo({ text: "Test todo", completed: false, x: 200, y: 200 })],
+		items: [
+			new Note({ text: "You left your water bottle at work", x: 100, y: 100 }),
+			new Todo({
+				text: "Buy bananas and beans",
+				completed: false,
+				due: "Today at 3:00 p.m.",
+				x: 200,
+				y: 200,
+			}),
+		],
 	});
 	view.dispose();
 	return container;
