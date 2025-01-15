@@ -1,4 +1,4 @@
-export type Action = NewNote | NewTodo;
+export type Action = NewNote | NewTodo | CompleteTodo;
 
 interface NewNote {
 	actionName: "newNote";
@@ -11,7 +11,14 @@ interface NewTodo {
 	actionName: "newTodo";
 	parameters: {
 		todo: string;
-		dueDate?: string | undefined;
+		due: string | undefined;
+	};
+}
+
+interface CompleteTodo {
+	actionName: "completeTodo";
+	parameters: {
+		todoText: string;
 	};
 }
 

@@ -62,8 +62,8 @@ function App({ canvas }: { canvas: Canvas }) {
 					}}
 				>
 					{item instanceof Todo && item.due !== undefined && !item.completed
-						? `Due: ${item.due}`
-						: undefined}
+						? `Due: ${prettyDate(item.due)}`
+						: "Completed"}
 				</div>
 			}
 			<div
@@ -118,3 +118,12 @@ function App({ canvas }: { canvas: Canvas }) {
 }
 
 export default App;
+
+function prettyDate(datetime: string): string {
+	const date = new Date(datetime);
+	if (Number.isNaN(date.getTime())) {
+		return datetime;
+	}
+
+	return date.toLocaleString();
+}

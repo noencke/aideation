@@ -14,7 +14,7 @@ import { createAgent } from "./handlers.ts";
 import { Canvas, Note, Todo } from "./schema.ts";
 
 const schema = `
-export type Action = NewNote | NewTodo;
+export type Action = NewNote | NewTodo | CompleteTodo;
 
 interface NewNote {
     actionName: "newNote";
@@ -27,6 +27,14 @@ interface NewTodo {
     actionName: "newTodo";
     parameters: {
         todo: string;
+        due: string | undefined;
+    };
+}
+
+interface CompleteTodo {
+    actionName: "completeTodo";
+    parameters: {
+        todoText: string;
     }
 }`;
 

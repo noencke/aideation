@@ -24,12 +24,40 @@ export function createAgent(context: AgentContext): AppAgent {
 				case "newTodo": {
 					const x = Math.floor(Math.random() * canvas.width);
 					const y = Math.floor(Math.random() * canvas.height);
-					canvas.items.insertAtEnd(
-						new Todo({ text: action.parameters.todo, x, y, completed: false }),
-					);
+					const todo = new Todo({
+						text: action.parameters.todo,
+						x,
+						y,
+						completed: false,
+						due: action.parameters.due,
+					});
+					canvas.items.insertAtEnd(todo);
 					return {
-						entities: [],
+						entities: [
+							{
+								name: action.parameters.todo,
+								type: ["todo"],
+								additionalEntityText: action.parameters.todo,
+								uniqueId: todo.id,
+							},
+						],
 						displayContent: "Added that todo for you!",
+					};
+				}
+				case "completeTodo": {
+					const todo = canvas.items.find(
+						(item) => item.text === action.parameters.todoText,
+					);
+					if (todo instanceof Todo) {
+						todo.completed = true;
+						return {
+							entities: [],
+							displayContent: "Marked that todo as complete!",
+						};
+					}
+
+					return {
+						error: "Could not find that todo item, sorry",
 					};
 				}
 				default:
