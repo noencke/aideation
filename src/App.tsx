@@ -61,9 +61,7 @@ function App({ canvas }: { canvas: Canvas }) {
 						backgroundColor: "#FFFFFF80",
 					}}
 				>
-					{item instanceof Todo && item.due !== undefined && !item.completed
-						? `Due: ${prettyDate(item.due)}`
-						: "Completed"}
+					{todoCompletionText(item)}
 				</div>
 			}
 			<div
@@ -126,4 +124,20 @@ function prettyDate(datetime: string): string {
 	}
 
 	return date.toLocaleString();
+}
+
+function todoCompletionText(item: Note | Todo): string {
+	if (item instanceof Todo) {
+		if (item.completed) {
+			return "Completed";
+		}
+
+		if (item.due !== undefined) {
+			return `Due: ${prettyDate(item.due)}`;
+		}
+
+		return "TODO"
+	}
+
+	return "";
 }
