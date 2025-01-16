@@ -44,18 +44,6 @@ function App({ canvas }: { canvas: Canvas }) {
 				});
 				e.preventDefault();
 			}}
-			onMouseMove={(e) => {
-				if (drag !== undefined) {
-					if (!drag.dragging) {
-						// Move to end of list to render on top
-						const index = canvas.items.indexOf(drag.item);
-						canvas.items.moveToEnd(index);
-						drag.dragging = true;
-					}
-					drag.item.x = drag.itemStart.x + e.clientX - drag.dragStart.x;
-					drag.item.y = drag.itemStart.y + e.clientY - drag.dragStart.y;
-				}
-			}}
 			onMouseUp={(e) => {
 				if (drag?.dragging === false) {
 					if (item instanceof Todo) {
@@ -111,6 +99,18 @@ function App({ canvas }: { canvas: Canvas }) {
 					width: `${canvas.width}px`,
 					height: `${canvas.height}px`,
 					border: "1px solid #ccc",
+				}}
+				onMouseMove={(e) => {
+					if (drag !== undefined) {
+						if (!drag.dragging) {
+							// Move to end of list to render on top
+							const index = canvas.items.indexOf(drag.item);
+							canvas.items.moveToEnd(index);
+							drag.dragging = true;
+						}
+						drag.item.x = drag.itemStart.x + e.clientX - drag.dragStart.x;
+						drag.item.y = drag.itemStart.y + e.clientY - drag.dragStart.y;
+					}
 				}}
 				onMouseLeave={() => {
 					setDrag(undefined);
