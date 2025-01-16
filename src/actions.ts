@@ -1,4 +1,4 @@
-export type Action = NewNote | NewTodo | CompleteTodo;
+export type Action = NewNote | NewTodo | CompleteTodo | Organize;
 
 interface NewNote {
 	actionName: "newNote";
@@ -18,7 +18,14 @@ interface NewTodo {
 interface CompleteTodo {
 	actionName: "completeTodo";
 	parameters: {
-		todoText: string;
+		todo: string;
+	};
+}
+
+interface Organize {
+	actionName: "organize";
+	parameters: {
+		todoGroups: string[][]; // Array of todo text arrays
 	};
 }
 

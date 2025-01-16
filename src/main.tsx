@@ -14,7 +14,7 @@ import { createAgent } from "./handlers.ts";
 import { Canvas, Note, Todo } from "./schema.ts";
 
 const schema = `
-export type Action = NewNote | NewTodo | CompleteTodo;
+export type Action = NewNote | NewTodo | CompleteTodo | Organize;
 
 interface NewNote {
     actionName: "newNote";
@@ -34,8 +34,15 @@ interface NewTodo {
 interface CompleteTodo {
     actionName: "completeTodo";
     parameters: {
-        todoText: string;
-    }
+        todo: string;
+    };
+}
+
+interface Organize {
+    actionName: "organize";
+    parameters: {
+        todoGroups: string[][]; // Array of todo text arrays
+    };
 }`;
 
 type AppAgentManifest = unknown; // TODO: This type is defined in the TypeAgent repo

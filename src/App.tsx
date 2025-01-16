@@ -11,6 +11,8 @@ function App({ canvas }: { canvas: Canvas }) {
 
 	const [drag, setDrag] = React.useState<{
 		item: Note | Todo;
+		itemStart: { x: number; y: number };
+		dragStart: { x: number; y: number };
 		dragging: boolean;
 	}>();
 
@@ -34,8 +36,25 @@ function App({ canvas }: { canvas: Canvas }) {
 				flexDirection: "column",
 			}}
 			onMouseDown={(e) => {
-				setDrag({ item, dragging: false });
+				setDrag({
+					item,
+					dragging: false,
+					itemStart: { x: item.x, y: item.y },
+					dragStart: { x: e.clientX, y: e.clientY },
+				});
 				e.preventDefault();
+			}}
+			onMouseMove={(e) => {
+				if (drag !== undefined) {
+					if (!drag.dragging) {
+						// Move to end of list to render on top
+						const index = canvas.items.indexOf(drag.item);
+						canvas.items.moveToEnd(index);
+						drag.dragging = true;
+					}
+					drag.item.x = drag.itemStart.x + e.clientX - drag.dragStart.x;
+					drag.item.y = drag.itemStart.y + e.clientY - drag.dragStart.y;
+				}
 			}}
 			onMouseUp={(e) => {
 				if (drag?.dragging === false) {
@@ -93,18 +112,6 @@ function App({ canvas }: { canvas: Canvas }) {
 					height: `${canvas.height}px`,
 					border: "1px solid #ccc",
 				}}
-				onMouseMove={(e) => {
-					if (drag !== undefined) {
-						if (!drag.dragging) {
-							// Move to end of list to render on top
-							const index = canvas.items.indexOf(drag.item);
-							canvas.items.moveToEnd(index);
-							drag.dragging = true;
-						}
-						drag.item.x += e.movementX;
-						drag.item.y += e.movementY;
-					}
-				}}
 				onMouseLeave={() => {
 					setDrag(undefined);
 				}}
@@ -136,7 +143,7 @@ function todoCompletionText(item: Note | Todo): string {
 			return `Due: ${prettyDate(item.due)}`;
 		}
 
-		return "TODO"
+		return "TODO";
 	}
 
 	return "";
